@@ -1,13 +1,24 @@
 package com.yagobbosa.forum.controller.form;
 
-import com.yagobbosa.forum.repository.CourseRepository;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.yagobbosa.forum.model.Course;
 import com.yagobbosa.forum.model.Topic;
+import com.yagobbosa.forum.repository.CourseRepository;
 
 public class TopicForm {
 
+	@NotNull
+	@NotEmpty
 	private String title;
+
+	@NotNull
+	@NotEmpty
 	private String message;
+
+	@NotNull
+	@NotEmpty
 	private String courseName;
 
 	public String getTitle() {
