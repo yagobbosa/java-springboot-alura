@@ -3,6 +3,7 @@ package com.yagobbosa.forum.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +64,10 @@ public class TopicsController {
 	}
 
 	@PutMapping("/{id}")
+	@Transactional
 	public ResponseEntity<TopicDto> toUpdate(@PathVariable Long id, @RequestBody @Valid TopicFormUpdate form) {
 		Topic topic = form.toUpdate(id, topicRepository);
-		
+
 		return ResponseEntity.ok(new TopicDto(topic));
 	}
 
