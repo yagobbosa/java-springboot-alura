@@ -24,7 +24,7 @@ public class Topic {
 	private LocalDateTime creationDate = LocalDateTime.now();
 
 	@Enumerated(EnumType.STRING)
-	private TopicStatus status = TopicStatus.UNSOLVED;
+	private TopicStatus status = TopicStatus.NOT_ANSWERED;
 
 	@ManyToOne
 	private User author;
