@@ -1,8 +1,8 @@
 package com.yagobbosa.forum.controller.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import com.yagobbosa.forum.model.Topic;
 
@@ -36,8 +36,8 @@ public class TopicDto {
 		return creationDate;
 	}
 
-	public static List<TopicDto> toConvert(List<Topic> topic) {
-		return topic.stream().map(TopicDto::new).collect(Collectors.toList());
+	public static Page<TopicDto> toConvert(Page<Topic> topic) {
+		return topic.map(TopicDto::new);
 	}
 
 }
