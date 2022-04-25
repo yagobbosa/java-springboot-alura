@@ -1,5 +1,9 @@
 package com.yagobbosa.forum.controller.form;
 
+import com.yagobbosa.forum.repository.CourseRepository;
+import com.yagobbosa.forum.model.Course;
+import com.yagobbosa.forum.model.Topic;
+
 public class TopicForm {
 
 	private String title;
@@ -28,6 +32,12 @@ public class TopicForm {
 
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+
+	public Topic toConvert(CourseRepository courseRepository) {
+		Course course = courseRepository.findByName(courseName);
+
+		return new Topic(title, message, course);
 	}
 
 }
