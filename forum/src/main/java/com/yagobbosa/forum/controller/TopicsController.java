@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.yagobbosa.forum.controller.dto.TopicDetailsDto;
 import com.yagobbosa.forum.controller.dto.TopicDto;
 import com.yagobbosa.forum.controller.form.TopicForm;
+import com.yagobbosa.forum.controller.form.TopicFormUpdate;
 import com.yagobbosa.forum.model.Topic;
 import com.yagobbosa.forum.repository.CourseRepository;
 import com.yagobbosa.forum.repository.TopicRepository;
@@ -54,10 +56,17 @@ public class TopicsController {
 	}
 
 	@GetMapping("/{id}")
-	public TopicDetailsDto details(@PathVariable Long id) {
+	public TopicDetailsDto detail(@PathVariable Long id) {
 		Topic topic = topicRepository.getById(id);
 
 		return new TopicDetailsDto(topic);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<TopicDto> toUpdate(@PathVariable Long id, @RequestBody @Valid TopicFormUpdate form) {
+		Topic topic = form.toUpdate(id, topicRepository);
+		
+		return ResponseEntity.ok(new TopicDto(topic));
 	}
 
 }
