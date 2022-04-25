@@ -2,12 +2,14 @@ package com.yagobbosa.forum.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +49,7 @@ public class TopicsController {
 	}
 
 	@PostMapping
+	@Transactional
 	public ResponseEntity<TopicDto> register(@RequestBody @Valid TopicForm form, UriComponentsBuilder uriBuilder) {
 		Topic topic = form.toConvert(courseRepository);
 		topicRepository.save(topic);
@@ -57,18 +60,41 @@ public class TopicsController {
 	}
 
 	@GetMapping("/{id}")
-	public TopicDetailsDto detail(@PathVariable Long id) {
-		Topic topic = topicRepository.getById(id);
+	public ResponseEntity<TopicDetailsDto> detail(@PathVariable Long id) {
+		Optional<Topic> optional = topicRepository.findById(id);
 
-		return new TopicDetailsDto(topic);
+		if (optional.isPresent())
+			return ResponseEntity.ok(new TopicDetailsDto(optional.get()));
+
+		return ResponseEntity.notFound().build();
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<TopicDto> toUpdate(@PathVariable Long id, @RequestBody @Valid TopicFormUpdate form) {
-		Topic topic = form.toUpdate(id, topicRepository);
+		Optional<Topic> optional = topicRepository.findById(id);
 
-		return ResponseEntity.ok(new TopicDto(topic));
+		if (optional.isPresent()) {
+			Topic topic = form.toUpdate(id, topicRepository);
+
+			return ResponseEntity.ok(new TopicDto(topic));
+		}
+
+		return ResponseEntity.notFound().build();
+	}
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> toRemove(@PathVariable Long id) {
+		Optional<Topic> optional = topicRepository.findById(id);
+
+		if (optional.isPresent()) {
+			topicRepository.deleteById(id);
+
+			return ResponseEntity.ok().build();
+		}
+
+		return ResponseEntity.notFound().build();
 	}
 
 }
