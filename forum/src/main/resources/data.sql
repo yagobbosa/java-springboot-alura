@@ -1,4 +1,4 @@
-insert into User (name, email, password) values ('yago', 'yago@gmail.com', '3859354');
+insert into User (name, email, password) values ('yago', 'yago@gmail.com', '$2a$10$O8jeuOweBH89viYFMu3wM.ch2hSdzNl8XtYNojrZoip5YDHGDg6la');
 
 insert into Course (name, category) values ('Spring Boot', 'Programming');
 insert into Course (name, category) values ('HTML 5', 'Front-end');
