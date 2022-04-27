@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.yagobbosa.forum.model.User;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -36,6 +37,13 @@ public class TokenService {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public Long getUserId(String token) {
+		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+		claims.getSubject();
+
+		return Long.parseLong(claims.getSubject());
 	}
 
 }
