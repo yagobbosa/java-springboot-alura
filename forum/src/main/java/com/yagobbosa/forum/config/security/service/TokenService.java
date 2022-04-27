@@ -1,4 +1,4 @@
-package com.yagobbosa.forum.config.security;
+package com.yagobbosa.forum.config.security.service;
 
 import java.util.Date;
 

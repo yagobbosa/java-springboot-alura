@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yagobbosa.forum.config.security.TokenService;
+import com.yagobbosa.forum.config.security.service.TokenService;
 import com.yagobbosa.forum.controller.dto.TokenDto;
 import com.yagobbosa.forum.controller.form.LoginForm;
 
