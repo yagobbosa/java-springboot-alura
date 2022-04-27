@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.yagobbosa.forum.config.security.filter.AuthenticationTokenFilter;
 import com.yagobbosa.forum.config.security.service.AuthenticationService;
+import com.yagobbosa.forum.config.security.service.TokenService;
 
 @EnableWebSecurity
 @Configuration
@@ -23,6 +24,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationService authenticationService;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	@Override
 	@Bean
@@ -41,7 +45,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/topics/*").permitAll().antMatchers(HttpMethod.POST, "/auth").permitAll()
 				.anyRequest().authenticated().and().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(new AuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
