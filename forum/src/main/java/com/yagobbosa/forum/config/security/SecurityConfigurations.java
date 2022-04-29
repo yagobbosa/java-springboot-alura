@@ -22,7 +22,7 @@ import com.yagobbosa.forum.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
+@Profile(value = { "prod", "test" })
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
